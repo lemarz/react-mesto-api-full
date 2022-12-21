@@ -1,0 +1,18 @@
+.header__bar_button {
+    color: #FFFFFF;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 22px;
+    outline: none;
+    border: none;
+    margin: 0;
+}
+
+
+@media screen and (max-width: 450px) {
+    .header__bar_button {
+        font-size: 14px;
+        line-height: 17px;
+    }
+}
