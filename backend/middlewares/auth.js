@@ -4,8 +4,7 @@ const ErrorNotAuth = require('../errors/ErrorNotAuth');
 const { JWT_SECRET = 'your-secret-key' } = process.env;
 
 const auth = (req, res, next) => {
-  const token = req.cookies.jwt;
-
+  const token = req.headers.authorization.replace('Bearer ', '');
   if (!token) {
     throw new ErrorNotAuth('Необходима авторизация');
   }

@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const { errors } = require('celebrate');
+const cors = require('cors');
 const { registerJoiValidator, loginJoiValidator } = require('./middlewares/joiValidator');
 const auth = require('./middlewares/auth');
 const notFound = require('./middlewares/notFound');
@@ -11,6 +12,8 @@ const { errorHandler } = require('./middlewares/errorHandler');
 
 const { PORT = 3000 } = process.env;
 const app = express();
+
+app.use(cors());
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));

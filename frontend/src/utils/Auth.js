@@ -1,6 +1,6 @@
 class Auth {
    constructor() {
-      this._baseUrl = 'https://auth.nomoreparties.co'
+      this._baseUrl = 'http://localhost:3000'
       this._headers = {
          'Content-Type': 'application/json',
       };
@@ -36,17 +36,6 @@ class Auth {
          .then(this._handleResponse)
    }
 
-   checkToken(token) {
-      return fetch(`${this._baseUrl}/users/me`, {
-         method: 'GET',
-         headers: {
-            ...this._headers,
-            "Authorization": `Bearer ${token}`
-         }
-      })
-
-         .then(this._handleResponse)
-   }
 
 }
 

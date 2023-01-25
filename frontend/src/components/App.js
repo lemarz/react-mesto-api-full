@@ -18,7 +18,6 @@ import ConfirmDeletePopup from "./ConfirmDeletePopup";
 
 import Footer from "./Footer";
 import Register from "./Register";
-import auth from "../utils/Auth";
 
 
 function App() {
@@ -44,7 +43,7 @@ function App() {
       if (!isAuth) {
          const token = localStorage.getItem("JWT")
          token &&
-         auth.checkToken(token)
+         api.getUserInfo()
             .then(res => {
                setIsAuth(true)
                setUserEmail(res.data.email)
@@ -57,11 +56,11 @@ function App() {
    useEffect(() => {
       if (isAuth) {
          api.getInitialCards()
-            .then(initialCardsData => setInitialCards(initialCardsData))
+            .then(initialCardsData => setInitialCards(initialCardsData.data))
             .catch(err => console.error(err))
 
          api.getUserInfo()
-            .then(userData => setCurrentUser(userData))
+            .then(userData => setCurrentUser(userData.data))
             .catch(console.error)
       }
    }, [isAuth])
@@ -79,7 +78,7 @@ function App() {
    const handleUpdateUser = (userInfo) => {
       api.setUserInfo(userInfo)
          .then(newUserInfo => {
-            setCurrentUser(newUserInfo)
+            setCurrentUser(newUserInfo.data)
             closeAllPopups()
          })
          .catch(console.error)
@@ -88,7 +87,7 @@ function App() {
    const handleUpdateAvatar = (avatarUrl) => {
       api.setAvatar(avatarUrl)
          .then(newUserInfo => {
-            setCurrentUser(newUserInfo)
+            setCurrentUser(newUserInfo.data)
             closeAllPopups()
          })
          .catch(console.error)
@@ -97,7 +96,7 @@ function App() {
    const handleAddPlaceSubmit = ({title, link}) => {
       api.addCard(title, link)
          .then(newCard => {
-            setInitialCards([newCard, ...initialCards])
+            setInitialCards([newCard.data, ...initialCards])
             closeAllPopups()
          })
          .catch(console.error)
@@ -114,17 +113,17 @@ function App() {
 
 
    const handleCardLike = card => {
-      const isLiked = card.likes.some(i => i._id === currentUser._id);
+      const isLiked = card.likes.some(i => i === currentUser._id);
 
       isLiked
          ? api.dislikeCard(card._id)
             .then(newCard =>
-               setInitialCards((state) => state.map((c) => c._id === card._id ? newCard : c)))
+               setInitialCards((state) => state.map((c) => c._id === card._id ? newCard.data : c)))
             .catch(console.error)
 
          : api.likeCard(card._id)
             .then(newCard =>
-               setInitialCards((state) => state.map((c) => c._id === card._id ? newCard : c)))
+               setInitialCards((state) => state.map((c) => c._id === card._id ? newCard.data : c)))
             .catch(console.error)
    }
 
