@@ -4,10 +4,12 @@ const ErrorNotAuth = require('../errors/ErrorNotAuth');
 const { JWT_SECRET = 'your-secret-key' } = process.env;
 
 const auth = (req, res, next) => {
-  const token = req.headers.authorization.replace('Bearer ', '');
-  if (!token) {
+  const { authorization } = req.headers;
+  if (!authorization || !authorization.startsWith('Bearer ')) {
     throw new ErrorNotAuth('Необходима авторизация');
   }
+
+  const token = authorization.replace('Bearer ', '');
 
   let payload;
 

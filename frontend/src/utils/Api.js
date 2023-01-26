@@ -85,7 +85,7 @@ class Api {
 
 // * Экземпляр Api
 const api = new Api({
-   baseUrl: 'http://localhost:3000',
+   baseUrl: 'https://api.lastone.nomoredomains.club',
    headers: {'Content-Type': 'application/json'}
 })
 

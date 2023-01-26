@@ -14,6 +14,7 @@ export default function Register() {
 
    const onCloseTooltip = () => {
       setIsInfoTooltipOpen(false)
+      infoTooltipStatus && history.push('/sign-in')
    }
 
    const handleChangeEmail = (e) => {
@@ -30,7 +31,6 @@ export default function Register() {
          .then(() => {
             setInfoTooltipStatus(true)
             setIsInfoTooltipOpen(true)
-            history.push('/sign-in')
          })
          .catch(err => {
             console.error(err)

@@ -4,7 +4,7 @@ const ErrorBadRequest = require('../errors/ErrorBadRequest');
 const ErrorNotCardOwner = require('../errors/ErrorNotCardOwner');
 
 module.exports.getCards = (req, res, next) => {
-  Cards.find({})
+  Cards.find({}).sort({ createdAt: -1 })
     .then((users) => res.send({ data: users }))
     .catch((err) => next(err));
 };
@@ -26,10 +26,7 @@ module.exports.likeCard = (req, res, next) => {
   Cards.findByIdAndUpdate(
     req.params.cardId,
     { $addToSet: { likes: req.user._id } },
-    {
-      new: true,
-      runValidators: true,
-    },
+    { new: true },
   )
     .orFail(() => {
       throw new ErrorNotFound('Передан несуществующий _id карточки.');
@@ -48,10 +45,7 @@ module.exports.disLikeCard = (req, res, next) => {
   Cards.findByIdAndUpdate(
     req.params.cardId,
     { $pull: { likes: req.user._id } },
-    {
-      new: true,
-      runValidators: true,
-    },
+    { new: true },
   )
     .orFail(() => {
       throw new ErrorNotFound('Передан несуществующий _id карточки.');

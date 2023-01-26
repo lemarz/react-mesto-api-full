@@ -1,6 +1,6 @@
 class Auth {
    constructor() {
-      this._baseUrl = 'http://localhost:3000'
+      this._baseUrl = 'https://api.lastone.nomoredomains.club'
       this._headers = {
          'Content-Type': 'application/json',
       };
